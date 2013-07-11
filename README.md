@@ -1,7 +1,12 @@
 peppercms
 =========
 
-A utility library that fetches a Google Spreadsheet as a JSON Object and parses it for later use. The spreadsheet should be published to the web (On google docs `File > Publish to Web`).
+A utility library that fetches a Google Spreadsheet as a JSON Object and parses it for later use. 
+
+Prerequisites
+-----------
+The spreadsheet should be published to the web (On google docs `File > Publish to Web`).
+After cloning the repository use `bower install` to install the dependencies. 
 
 Usage
 -----
