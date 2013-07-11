@@ -12,16 +12,17 @@ Usage
 -----
 First define your schema by defining the column names and their types. You can use `'string'`, `'int'`, `'float'`, `'arrayOfString'`, `'arrayOfFloat'` or `'arrayOfInt'`.
 ```javascript
-var Schema = {
+var schema = {
 	'Name': 'string',
 	'Age': 'int',
 	'Favorite Colors': 'arrayOfString',
 	'GPA': 'float' 
 }
 ```
-Then feed it to the constructor along with your Google Spreadsheet ID. You get the ID from the URL of your spreadsheet. E.g: `https://docs.google.com/spreadsheet/ccc?key=0Aqv3NjQVGHDbdDdxOTRzZzRFdmJWb0owV1FPdDI1bUE#gid=0` has the ID `0Aqv3NjQVGHDbdDdxOTRzZzRFdmJWb0owV1FPdDI1bUE`
+Then feed it to the constructor along with your Google Spreadsheet URL.
+
 ```javascript
-var cms = pepper("MY-SPREADSHEET-ID", Schema);
+var cms = pepper("MY-SPREADSHEET-URL", schema);
 ```
 To sync the local object with the Spreadsheet, use the `sync` method. `sync` returns a [Promise](http://wiki.commonjs.org/wiki/Promises/A) so you can use `then` when the fetching is done.
 ```javascript
