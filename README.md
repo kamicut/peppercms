@@ -11,6 +11,7 @@ After cloning the repository use `bower install` to install the dependencies.
 Usage
 -----
 First define your schema by defining the column names and their types. You can use `'string'`, `'int'`, `'float'`, `'arrayOfString'`, `'arrayOfFloat'` or `'arrayOfInt'`.
+In the spreadseet, arrays are written as `value1,value2,value3`. See the sample [here.](https://docs.google.com/spreadsheet/ccc?key=0Aqv3NjQVGHDbdDdxOTRzZzRFdmJWb0owV1FPdDI1bUE)
 ```javascript
 var schema = {
 	'Name': 'string',
