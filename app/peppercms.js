@@ -96,7 +96,7 @@ var pepper = function (gdocsKey, schema) {
 				output.push(outEntry);
 			}
 			_collection = output;
-			deferred.resolve();
+			deferred.resolve(_collection);
 		
 			return deferred.promise;
 		}

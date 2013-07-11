@@ -18,9 +18,7 @@
 		'arrayofint': 'arrayOfInt'
 	});
 	cms.sync()
-	.then(function() {
-		data = cms.getCollection();
-		
+	.then(function(data) {
 		//Update view
 		document.getElementById('content').innerHTML = (JSON.stringify(data, null, '\t'));
 	})
