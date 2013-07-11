@@ -1,0 +1,14 @@
+{
+  "name": "peppercms",
+  "version": "0.0.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+	  "q": "0.9.6"
+  }
+}

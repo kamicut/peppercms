@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>PepperCMS</title>
+</head>
+<body>
+	<pre id="content"></pre>
+	<script type="text/javascript" charset="utf-8" src="components/q/q.js"></script>
+	<script type="text/javascript" charset="utf-8" src="peppercms.js"></script>
+	<script type="text/javascript" charset="utf-8">
+	var cms = pepper("0Aqv3NjQVGHDbdDdxOTRzZzRFdmJWb0owV1FPdDI1bUE", {
+		'string': 'string',
+		'int': 'int',
+		'arrayofstring': 'arrayOfString',
+		'arrayoffloat': 'arrayOfFloat',
+		'float': 'float',
+		'arrayofint': 'arrayOfInt'
+	});
+	cms.sync()
+	.then(function() {
+		data = cms.getCollection();
+		
+		//Update view
+		document.getElementById('content').innerHTML = (JSON.stringify(data, null, '\t'));
+	})
+	.fail(function (error) {
+		console.log("Failed to sync: "+ error);
+	});
+	</script>
+</body>
+</html>
