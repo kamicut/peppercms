@@ -1,15 +1,37 @@
-var pepper = function (gdocsKey, schema) {
+var pepper = function (gdocsURL, schema) {
 	'use strict';
 	var that = {},
-		_collection = [], 
-		_key = gdocsKey, 
+		_collection = [],
+		_key = null,
+		_worksheet = 'od6',
+		_url = gdocsURL, 
 		_schema = schema;
+		
+	//Get key and worksheet
+	(function _getKeyfromURL() {
+		var params = _url.slice(_url.indexOf('?') + 1).split('&');
+		for(var i = 0; i < params.length; i++) {
+			var element = params[i].split('=');
+			if (element[0] === 'key') {
+				_key = element[1];
+			}
+			if (element[0] === 'worksheet') {
+				_worksheet = element[1];
+			}
+		}
+	})();
 
 	that.sync = function () {	
 		function req() {
 			var request = new XMLHttpRequest(),
-				deferred = Q.defer(),
-				url = "https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
+				deferred = Q.defer();
+				
+			//If key undefined, throw error
+			if (!_key || !_worksheet) {
+				deferred.reject(new Error("Could not get key from URL"));
+				return deferred.promise;
+			}
+			var url = "https://spreadsheets.google.com/feeds/list/" + _key + "/"+ _worksheet +"/public/values?alt=json";
 		    
 		    function onload() {
 		        if (request.status === 200) {
@@ -44,6 +66,10 @@ var pepper = function (gdocsKey, schema) {
 		function parseData(dataFromSheet) {
 			var deferred = Q.defer(),
 				output = [];
+			
+			if (!dataFromSheet) { 
+				deferred.reject(new Error("No Data retrieved"));
+			}
 			
 			//Parse 
 			var json = JSON.parse(dataFromSheet),
@@ -104,8 +130,6 @@ var pepper = function (gdocsKey, schema) {
 		return req()
 		.then(function(data) {
 			return parseData(data);
-		}, function(error) {
-			console.log("Request failed: "+error);
 		})
 	}
 
