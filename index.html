@@ -11,12 +11,12 @@
 	<script type="text/javascript" charset="utf-8">
 	var url = "https://docs.google.com/spreadsheet/ccc?key=0Aqv3NjQVGHDbdDdxOTRzZzRFdmJWb0owV1FPdDI1bUE";
 	var cms = pepper(url, {
-		'string': 'string',
-		'int': 'int',
-		'arrayofstring': 'arrayOfString',
-		'arrayoffloat': 'arrayOfFloat',
-		'float': 'float',
-		'arrayofint': 'arrayOfInt'
+		'Name': 'string',
+		'Age': 'int',
+		'Multiple names': 'arrayOfString',
+		'Favorite floats': 'arrayOfFloat',
+		'Grade': 'float',
+		'Favorite ints (really?)': 'arrayOfInt'
 	});
 	cms.sync()
 	.then(function(data) {
@@ -24,7 +24,7 @@
 		document.getElementById('content').innerHTML = (JSON.stringify(data, null, '\t'));
 	})
 	.fail(function (error) {
-		console.log("Sync Failed"+ error);
+		console.log("Sync Failed: "+ error);
 	})
 	</script>
 </body>

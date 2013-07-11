@@ -20,7 +20,15 @@ var pepper = function (gdocsURL, schema) {
 			}
 		}
 	})();
-
+	
+	(function fixSchemaKeys() {
+		var newSchema = {}
+		for (var key in _schema) {
+			newSchema[key.toLowerCase().replace(/[^a-zA-Z0-9]/g,'')] = _schema[key];
+		}
+		_schema = newSchema;
+	}());
+	
 	that.sync = function () {	
 		function req() {
 			var request = new XMLHttpRequest(),
@@ -77,20 +85,14 @@ var pepper = function (gdocsURL, schema) {
 			for (var i =0 ;	i<numEntries; i++) {
 				var entry = json.feed.entry[i];
 				var outEntry = {}, propNames = [];
-				if (typeof _schema.length === 'number') {
-					propNames = _schema;
-					for (var j = 0; j<propNames.length; j++) {
-						var prop = 'gsx$' + propNames[j];
-						if (entry.hasOwnProperty(prop)) {
-							outEntry[propNames[j]] = entry[prop]['$t'];	
-						}
-					}
+				if (typeof _schema !== 'object') {
+					deferred.rejet(new Error("Schema is not properly defined."))
 				} else {
 					for (var key in _schema) {
 						var prop = 'gsx$' + key;
 						if (entry.hasOwnProperty(prop)) {
 							var value = entry[prop]['$t'];
-							switch(_schema[key]) {
+							switch(_schema[key].toLowerCase()) {
 								case 'int':
 									//Strip away any non numerical characters
 									value = parseInt(value.replace(/\D/g,''), 10); 
@@ -98,20 +100,25 @@ var pepper = function (gdocsURL, schema) {
 								case 'float':
 									value = parseFloat(value);
 									break;
-								case 'arrayOfString':
+								case 'arrayofstring':
 									value = value.split(',');
 									break;
-								case 'arrayOfInt':
+								case 'arrayofint':
 									value = value.split(',');
 									for (var j=0; j<value.length; j++) {
 										value[j] = parseInt(value[j]);
 									}
 									break;
-								case 'arrayOfFloat':
+								case 'arrayoffloat':
 									value = value.split(',');
 									for (var j=0; j<value.length; j++) {
 										value[j] = parseFloat(value[j]);
 									}
+									break;
+								case 'string':
+									break;
+								default:
+									deferred.reject('Could not understand format '+_schema[key]);
 									break;
 							}
 							outEntry[key] = value;
