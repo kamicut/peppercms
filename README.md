@@ -18,14 +18,23 @@ Then feed it to the constructor along with your Google Spreadsheet ID. You get t
 ```javascript
 var cms = pepper("MY-SPREADSHEET-ID", Schema);
 ```
-To sync the local object with the Spreadsheet, use the `sync` method. `sync` returns a [Promise](http://wiki.commonjs.org/wiki/Promises/A) so you can use `then` when the fetching is done. You can then access the data using the  method `getCollection`.
+To sync the local object with the Spreadsheet, use the `sync` method. `sync` returns a [Promise](http://wiki.commonjs.org/wiki/Promises/A) so you can use `then` when the fetching is done.
 ```javascript
 cms.sync()
-.then(function() {
-	data = cms.getCollection();
+.then(function(data) {
 	console.log(data);
 }
 .fail(function (error) {
 	console.log("Failed to sync: "+ error);
 });
+```
+
+API
+----
+```javascript
+pepper(id,schema)			Constructor
+pepper.sync()				Fetch data from Spreadsheet
+pepper.getCollection()		Getter for local data object parsed using schema
+pepper.getSchema()			Getter for schema
+pepper.getKey()				Getter for key
 ```
