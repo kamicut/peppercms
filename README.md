@@ -3,10 +3,22 @@ peppercms
 
 A utility library that fetches a Google Spreadsheet as a JSON Object and parses it for later use. 
 
-Prerequisites
+Install
 -----------
 The spreadsheet should be published to the web (On google docs `File > Publish to Web`).
-After cloning the repository use `bower install` to install the dependencies. 
+
+To install just run
+```shell
+bower install peppercms
+```
+
+Then in your application include statically with q as a dependency
+```HTML
+...
+<script src="bower_components/q/q.js"></script>
+<script src="bower_components/peppercms/peppercms.js"></script>
+...
+```
 
 Usage
 -----
